@@ -1,0 +1,24 @@
+name: "Build binaries for all supported platforms"
+on:
+  push:
+    branches:
+      - senpai
+  pull_request:
+    branches:
+      - senpai
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: golang:bookworm
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: bash build.sh
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
